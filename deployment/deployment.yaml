@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cdp-limitrange-customizer-admission-manager
+  labels:
+    app: cdp-limitrange-customizer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cdp-limitrange-customizer
+  template:
+    metadata:
+      labels:
+        app: cdp-limitrange-customizer
+    spec:
+      serviceAccount: cdp-limitrange-customizer-admission-manager-sa
+      containers:
+        - name: cdp-limitrange-customizer
+          image: daocloud.io/daocloud/cdp-limitrange-customizer:latest
+          imagePullPolicy: Always
+          args:
+            - -tlsCertFile=/etc/webhook/certs/tls.crt
+            - -tlsKeyFile=/etc/webhook/certs/tls.key
+            - -alsologtostderr
+            - -v=4
+            - 2>&1
+          volumeMounts:
+            - name: webhook-certs
+              mountPath: /etc/webhook/certs
+              readOnly: true
+      volumes:
+        - name: webhook-certs
+          secret:
+            secretName: cdp-limitrange-customizer-admission-manager-certs
+      ## By DaoCloud
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/master
+                operator: Exists
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                - linux
+      tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+      ##

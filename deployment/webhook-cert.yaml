@@ -1,0 +1,26 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cdp-limitrange-customizer-webhook-cert
+  namespace: cdp-customizer
+spec:
+  secretName: cdp-limitrange-customizer-admission-manager-certs
+  subject:
+    organizations:
+    - dce
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
+    - client auth
+  dnsNames:
+  - cdp-limitrange-customizer
+  - cdp-limitrange-customizer.cdp-customizer
+  - cdp-limitrange-customizer.cdp-customizer.svc
+  - cdp-limitrange-customizer.cdp-customizer.svc.cluster.local
+  ipAddresses:
+  - 127.0.0.1
+  issuerRef:
+    name: k8s-ca-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io

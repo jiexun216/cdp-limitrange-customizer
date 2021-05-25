@@ -1,0 +1,94 @@
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: validate-webhook-cdp-limitrange-customizer-cfg
+  annotations:
+    cert-manager.io/inject-ca-from: cdp-customizer/cdp-limitrange-customizer-webhook-cert
+  labels:
+    app: cdp-limitrange-customizer
+webhooks:
+  - name: validate-cdp-limitrange-customizer-console.datacreating.com
+    clientConfig:
+      service:
+        name: quota-limitrange-admission-manager
+        namespace: cdp-customizer
+        path: "/validate"
+    rules:
+      - operations: ["CREATE"]
+        apiGroups: ["","networking.k8s.io"]
+        apiVersions: ["v1"]
+        resources: ["limitranges","resourcequotas","networkpolicies"]
+    namespaceSelector:
+      matchExpressions:
+        # key exist
+        - key: monitoring-platform-access
+          operator: Exists
+    timeoutSeconds: 5
+  - name: validate-cdp-limitrange-customizer-cml.datacreating.com
+    clientConfig:
+      service:
+        name: quota-limitrange-admission-manager
+        namespace: cdp-customizer
+        path: "/validate"
+    rules:
+      - operations: ["CREATE"]
+        apiGroups: [""]
+        apiVersions: ["v1"]
+        resources: ["limitranges","resourcequotas"]
+    namespaceSelector:
+      matchExpressions:
+        # key exist
+        - key: associatedCRP
+          operator: Exists
+    timeoutSeconds: 5
+  - name: validate-cdp-limitrange-customizer-implala.datacreating.com
+    clientConfig:
+      service:
+        name: quota-limitrange-admission-manager
+        namespace: cdp-customizer
+        path: "/validate"
+    rules:
+      - operations: ["CREATE"]
+        apiGroups: [""]
+        apiVersions: ["v1"]
+        resources: ["limitranges","resourcequotas"]
+    namespaceSelector:
+      matchExpressions:
+        # key exist
+        - key: istio-injection
+          operator: Exists
+    timeoutSeconds: 5
+  - name: validate-cdp-limitrange-customizer-monitoring.datacreating.com
+    clientConfig:
+      service:
+        name: quota-limitrange-admission-manager
+        namespace: cdp-customizer
+        path: "/validate"
+    rules:
+      - operations: ["CREATE"]
+        apiGroups: ["apps"]
+        apiVersions: ["v1"]
+        resources: ["limitranges","resourcequotas"]
+    namespaceSelector:
+      matchExpressions:
+        # key exist
+        - key: cdp.cloudera/version
+          operator: Exists
+    timeoutSeconds: 5
+  - name: validate-quota-limitrange-ds-parent-namespace.datacreating.com
+    clientConfig:
+      service:
+        name: quota-limitrange-admission-manager
+        namespace: cdp-customizer
+        path: "/validate"
+    rules:
+      - operations: ["CREATE"]
+        apiGroups: ["apps"]
+        apiVersions: ["v1"]
+        resources: ["limitranges","resourcequotas"]
+    namespaceSelector:
+      matchExpressions:
+        # key exist
+        - key: ds-parent-namespace
+          operator: Exists
+    timeoutSeconds: 5
