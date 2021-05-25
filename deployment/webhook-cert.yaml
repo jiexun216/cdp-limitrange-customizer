@@ -14,10 +14,10 @@ spec:
     - server auth
     - client auth
   dnsNames:
-  - cdp-limitrange-customizer
-  - cdp-limitrange-customizer.cdp-customizer
-  - cdp-limitrange-customizer.cdp-customizer.svc
-  - cdp-limitrange-customizer.cdp-customizer.svc.cluster.local
+  - cdp-limitrange-customizer-admission-manager
+  - cdp-limitrange-customizer-admission-manager.cdp-customizer
+  - cdp-limitrange-customizer-admission-manager.cdp-customizer.svc
+  - cdp-limitrange-customizer-admission-manager.cdp-customizer.svc.cluster.local
   ipAddresses:
   - 127.0.0.1
   issuerRef:

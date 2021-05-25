@@ -10,7 +10,7 @@ webhooks:
   - name: validate-cdp-limitrange-customizer-console.datacreating.com
     clientConfig:
       service:
-        name: quota-limitrange-admission-manager
+        name: cdp-limitrange-customizer-admission-manager
         namespace: cdp-customizer
         path: "/validate"
     rules:
@@ -27,7 +27,7 @@ webhooks:
   - name: validate-cdp-limitrange-customizer-cml.datacreating.com
     clientConfig:
       service:
-        name: quota-limitrange-admission-manager
+        name: cdp-limitrange-customizer-admission-manager
         namespace: cdp-customizer
         path: "/validate"
     rules:
@@ -44,7 +44,7 @@ webhooks:
   - name: validate-cdp-limitrange-customizer-implala.datacreating.com
     clientConfig:
       service:
-        name: quota-limitrange-admission-manager
+        name: cdp-limitrange-customizer-admission-manager
         namespace: cdp-customizer
         path: "/validate"
     rules:
@@ -61,7 +61,7 @@ webhooks:
   - name: validate-cdp-limitrange-customizer-monitoring.datacreating.com
     clientConfig:
       service:
-        name: quota-limitrange-admission-manager
+        name: cdp-limitrange-customizer-admission-manager
         namespace: cdp-customizer
         path: "/validate"
     rules:
@@ -78,7 +78,7 @@ webhooks:
   - name: validate-quota-limitrange-ds-parent-namespace.datacreating.com
     clientConfig:
       service:
-        name: quota-limitrange-admission-manager
+        name: cdp-limitrange-customizer-admission-manager
         namespace: cdp-customizer
         path: "/validate"
     rules:

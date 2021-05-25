@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: quota-limitrange-admission-manager
+  name: cdp-limitrange-customizer-admission-manager
   labels:
     app: cdp-limitrange-customizer
 spec:
